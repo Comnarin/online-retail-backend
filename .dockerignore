@@ -1,0 +1,12 @@
+.git
+.env
+bin/
+build/
+app
+scratch/
+*.log
+.DS_Store
+.vscode/
+.idea/
+Dockerfile
+.github/
