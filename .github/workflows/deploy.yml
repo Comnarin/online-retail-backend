@@ -37,12 +37,18 @@ jobs:
           script: |
             mkdir -p /opt/retail
             cd /opt/retail
+
+            docker network create retail-network || true
+
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/online-retail-backend:latest
+
             docker stop retail-backend || true
             docker rm retail-backend || true
+
             docker run -d \
               --name retail-backend \
               --network retail-network \
+              --restart always \
               -p 4001:4001 \
               --env-file /opt/retail/.env \
               ${{ secrets.DOCKER_HUB_USERNAME }}/online-retail-backend:latest
