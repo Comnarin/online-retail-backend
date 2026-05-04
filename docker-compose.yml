@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: retail_user
       POSTGRES_PASSWORD: retail_pass
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d

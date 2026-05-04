@@ -31,10 +31,12 @@ jobs:
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            mkdir -p /opt/retail
+            cd /opt/retail
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/online-retail-backend:latest
             docker stop retail-backend || true
             docker rm retail-backend || true
@@ -42,5 +44,5 @@ jobs:
               --name retail-backend \
               --network retail-network \
               -p 4001:4001 \
-              --env-file /root/retail/.env \
+              --env-file /opt/retail/.env \
               ${{ secrets.DOCKER_HUB_USERNAME }}/online-retail-backend:latest
